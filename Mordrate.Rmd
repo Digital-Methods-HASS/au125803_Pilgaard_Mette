@@ -1,0 +1,43 @@
+---
+title: "Mordrate"
+author: "Mette Pilgaard"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Indlæsning af den downloadede fil HomicideHistory-main/data/homicide-rates-across-western-europe.csv. Den gives et nyt filnavn "mordrate"
+library(tidyverse)
+library(ggplot2)
+
+selvmord <- read_csv(file = "../HomicideHistory-main/data/homicide-rates-across-western-europe.csv")
+
+
+mordrate <- selvmord
+```
+## give nyt variabelnavn til kolonne 4 "Homicide rate in Europe over long-term (per 100,000) (homicides per 100,000 people)" til "murder_rate"
+
+```{r}
+names(mordrate)
+
+names(mordrate)[4] <- "murder_rate"
+```
+### Laver en plot med x= year og y: "murder_rate
+```{r}
+mordrate %>%
+  ggplot(aes(x = Year, y =  murder_rate)) +
+  geom_point(color = "red") 
+
+#### Laver forskellige farver for hvert land
+
+mordrate %>%
+  ggplot(aes(x = Year, y =  murder_rate, color = Entity)) +
+  geom_point() 
+```
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
